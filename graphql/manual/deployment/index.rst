@@ -30,3 +30,4 @@ to configure Hasura GraphQL engine for your production environment.
    securing-graphql-endpoint
    postgres-permissions
    GraphQL engine server configuration <graphql-engine-flags/index>
+   Updating GraphQL engine <updating>

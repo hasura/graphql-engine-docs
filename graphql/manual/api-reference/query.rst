@@ -1,16 +1,18 @@
-.. title:: API Reference - Query
+.. title:: API Reference - Query/Subscription
 
-API Reference - Query
-=====================
+API Reference - Query/Subscription
+==================================
 
-Query syntax
-------------
+Query/Subscription syntax
+-------------------------
 
 .. parsed-literal::
    :class: haskell-pre
 
-    object [([argument])]{
-      object-fields
+    query|subscription [<op-name>] {
+      object [([argument])]{
+        object-fields
+      }
     }
 
 .. list-table::
@@ -20,22 +22,38 @@ Query syntax
      - Required
      - Schema
      - Description
+   * - op-name
+     - false
+     - Value
+     - Name query/subscription for observability
    * - object
      - true
-     - GraphQLObject_
+     - Object_
      - Name of the table/object
    * - argument
      - false
-     - ArgExp_
+     - Argument_
      - one or more of filter criteria, instructions for sort order or pagination
 
-**E.g.**:
+**E.g. QUERY**:
 
 .. parsed-literal::
    :class: haskell-pre
 
     query {
-      author(where: {articles: {id: {_gt: 10}}} order_by: ["-name"]) {
+      author(where: {articles: {rating: {_gte: 4}}} order_by: name_asc) {
+        id
+        name
+      }
+    }
+
+**E.g. SUBSCRIPTION**:
+
+.. parsed-literal::
+   :class: haskell-pre
+
+    subscription {
+      author(where: {articles: rating: {_gte: 4}}} order_by: name_asc) {
         id
         name
       }
@@ -48,7 +66,7 @@ Query syntax
 Syntax definitions
 ------------------
 
-.. _GraphQLObject:
+.. _Object:
 
 Object
 ^^^^^^
@@ -77,7 +95,7 @@ E.g.
       }
    }
 
-.. _ArgExp:
+.. _Argument:
 
 Argument
 ^^^^^^^^
@@ -85,12 +103,22 @@ Argument
 .. parsed-literal::
    :class: haskell-pre
 
-   ( where BoolExp_ | OrderByExp_ | PaginationExp_ )
+   WhereExp_ | OrderByExp_ | PaginationExp_
 
-.. _BoolExp:
+.. _WhereExp:
+
+WhereExp
+********
+
+.. parsed-literal::
+  :class: haskell-pre
+
+   where: BoolExp_
+
+.. _BoolExp_:
 
 BoolExp
-*******
+"""""""
 
 .. parsed-literal::
    :class: haskell-pre
@@ -104,7 +132,7 @@ AndExp
    :class: haskell-pre
 
     {
-      _and: [ColumnExp_]
+      _and: [BoolExp_]
     }
 
 
@@ -115,7 +143,7 @@ OrExp
    :class: haskell-pre
 
     {
-      _or: [ColumnExp_]
+      _or: [BoolExp_]
     }
 
 NotExp
@@ -125,7 +153,7 @@ NotExp
    :class: haskell-pre
 
     {
-      _not: [ColumnExp_]
+      _not: BoolExp_
     }
 
 ColumnExp
@@ -169,6 +197,10 @@ Text related operators :
 - ``_similar``
 - ``_nsimilar``
 
+Checking for ``null`` values :
+
+- ``_is_null`` (takes true/false as values)
+
 .. _OrderByExp:
 
 OrderByExp
@@ -177,7 +209,32 @@ OrderByExp
 .. parsed-literal::
    :class: haskell-pre
 
-   order_by: Integer
+   order_by: (object-field + OrderByOperator_ | [object-field + OrderByOperator_])
+
+E.g.
+
+.. parsed-literal::
+  :class: haskell-pre
+
+   order_by: name_asc
+
+or
+
+.. parsed-literal::
+  :class: haskell-pre
+
+   order_by: [name_asc, id_desc]
+
+
+.. _OrderByOperator:
+
+OrderByOperator
+"""""""""""""""
+
+- ``_asc``
+- ``_desc``
+- ``_asc_nulls_first``
+- ``_desc_nulls_first``
 
 .. _PaginationExp:
 

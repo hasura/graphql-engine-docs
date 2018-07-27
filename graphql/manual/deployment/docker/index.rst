@@ -68,14 +68,14 @@ Step 3: Run the hasura docker container
 
 You'll see a sample docker run command at ``my-project/install-scripts/docker-run.sh``.
 
-Edit the ``--database-url`` flag command, so that you can connect to your postgres instance.
+Edit the ``--database-url`` flag command, so that you can connect to your Postgres instance.
 
 .. code-block:: bash
    :emphasize-lines: 5
 
    #! /bin/bash
    docker run -d -p 8080:8080 \
-          hasura/graphql-engine:v1.0.0-alpha08 \
+          hasura/graphql-engine:latest \
           graphql-engine \
           --database-url postgres://username:password@hostname:port/dbname \
    serve --enable-console
@@ -87,15 +87,16 @@ Examples of `database-url`:
 
 .. note:: Docker networking
 
-   If your postgres database is running on localhost:5432, add the ``--net=host`` flag.
+   If your Postgres database is running on localhost:5432, add the ``--net=host`` flag.
    This is what your command might look like:
 
    .. code-block:: bash
       :emphasize-lines: 5
 
       #! /bin/bash
+
       docker run -d --net=host \
-             hasura/graphql-engine:v1.0.0-alpha08 \
+             hasura/graphql-engine:latest \
              graphql-engine \
              --database-url postgres://username:password@hostname:port/dbname \
       serve --enable-console
@@ -140,3 +141,4 @@ Advanced:
    :titlesonly:
 
    Securing your GraphQL endpoint <securing-graphql-endpoint>
+   Updating GraphQL engine <updating>

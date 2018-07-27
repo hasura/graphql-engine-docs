@@ -296,7 +296,7 @@ E.g.:
 .. parsed-literal::
    :class: haskell-pre
 
-    (where: BoolExp_)
+    where: BoolExp_
 
 .. _BoolExp:
 
@@ -315,7 +315,7 @@ AndExp
    :class: haskell-pre
 
     {
-      _and: [ColumnExp_]
+      _and: [BoolExp_]
     }
 
 
@@ -326,7 +326,7 @@ OrExp
    :class: haskell-pre
 
     {
-      _or: [ColumnExp_]
+      _or: [BoolExp_]
     }
 
 NotExp
@@ -336,7 +336,7 @@ NotExp
    :class: haskell-pre
 
     {
-      _not: [ColumnExp_]
+      _not: BoolExp_
     }
 
 ColumnExp
@@ -379,6 +379,10 @@ Text related operators :
 - ``_nilike``
 - ``_similar``
 - ``_nsimilar``
+
+Checking for ``null`` values :
+
+- ``_is_null`` (takes true/false as values)
 
 .. _setArgExp:
 
