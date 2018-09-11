@@ -1,3 +1,7 @@
+## Important: moved to [hasura/graphql-engine/docs](https://github.com/hasura/graphql-engine/tree/merge-docs/docs)
+
+This repo's content have been moved to [hasura/graphql-engine/docs](https://github.com/hasura/graphql-engine/tree/merge-docs/docs). All issues and pull requests should now be created at [hasura/graphql-engine](https://github.com/hasura/graphql-engine).
+
 ### This is the documentation for the Hasura GraphQL engine
 
 This documentation project is built using [Sphinx](http://www.sphinx-doc.org/en/master/). 
